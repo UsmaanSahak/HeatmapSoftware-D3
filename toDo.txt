@@ -1,0 +1,4 @@
+1 - Make it so when hover over or click legend entry, make the points similar in value to highlight
+with a gold frame, so easier to spot.
+
+2 - Make legend text enlarge when hovering over.

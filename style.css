@@ -1,4 +1,12 @@
-svg {
+#firstMap {
  background-color: white;
  cursor: crosshair; 
+}
+
+#legend {
+ background-color: white;
+ cursor: help;
+ border-style: groove;
+ width: 150px;
+ float: left;
 }
