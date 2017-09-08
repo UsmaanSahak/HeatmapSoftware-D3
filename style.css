@@ -1,6 +1,8 @@
 #firstMap {
  background-color: white;
- cursor: crosshair; 
+ cursor: crosshair;
+ border-style: dotted;
+ float: left; 
 }
 
 #legend {
@@ -9,4 +11,8 @@
  border-style: groove;
  width: 150px;
  float: left;
+}
+
+#secondMap {
+ clear: both;
 }

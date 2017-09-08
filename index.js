@@ -29,6 +29,9 @@ console.log(dataset);
 }
 
 
+
+
+
 function loadHeadBoxes() {
  
  var minData = d3.min(dataset, function(d) { return parseFloat(d); });
@@ -37,58 +40,31 @@ function loadHeadBoxes() {
  console.log(maxData);
  var scalePos = d3.scaleLinear().domain([0,maxData]).range([0,1.0]);
  var scaleNeg = d3.scaleLinear().domain([0,minData]).range([0,1.0]);
- console.log(scalePos(111));
- console.log(scalePos(1));
- console.log(scalePos(1000));
- console.log(scalePos(0));
- console.log(scaleNeg(0));
- console.log(scaleNeg(-1111));
- console.log(scaleNeg(-22));
+
 
 /*d3.select("body").append("div").attr("id","firstMap");*/
-d3.select("#firstMap").append("h2").text("Zero = White"); 
+d3.select("#firstMap").append("h2").text("Heatmap <noninteractive>"); 
  var svg = d3.select("#firstMap").append("svg")
-.attr("width",1000).attr("height",300); /*Height is 300, acts as buffer room/padding.*/
+.attr("width",1050).attr("height",300); /*Height is 300, acts as buffer room/padding.*/
 /*d3.select("body").append("p").text("ooo");*/
 
-svg.append("text").text("bbbbbbbb")
-.attr("x", 300).attr("y", 20).attr("font-size",30);
+/*svg.append("text").text("bbbbbbbb")
+.attr("x", 300).attr("y", 20).attr("font-size",30);*/
 
 /*first map*/
 svg.selectAll("rect").data(dataset).enter().append("rect")
-.attr("x",function(d,i) { return 10 * (i % 100); })
+.attr("x",function(d,i) { return 10 * (i % 100) + 50; })
 .attr("y",function(d,i) { return 10 * Math.trunc(i/100); })
 .attr("height",10).attr("width",10)
 .attr("fill", function(d) { if (d < 0) { return "rgba(0,0,255," + scaleNeg(d) + ")"; } else { return "rgba(255,0,0," + scalePos(d) + ")"; } })
-.attr("class","heatBox").attr("id","dd");
+.attr("class","heatBox").attr("id","dd"); //Change to function of unique ids later
 
 
-var nextLine = document.createElement("br");
+//var nextLine = document.createElement("br");
 /*add \n for legend to shift left. */
-document.getElementById("firstMap").appendChild(document.createElement("br"));
+//document.getElementById("firstMap").appendChild(document.createElement("br"));
 var legendSample = [];
-/*
-//get average of the dataset, get Q1 and Q3, and the min and max.
-var avg = 0;
-for (var i = 0; i < dataset.length; i++) {
- avg = avg + dataset[i];
-}
-console.log(avg, " is sum.");
-avg = avg / dataset.length;
-console.log(avg, " is avg.");
-legendSample.push(minData);
-legendSample.push(avg/2);
-legendSample.push(avg);
-legendSample.push((3*avg)/2);
-legendSample.push(maxData);
 
-console.log(scaleNeg(legendSample[0]));
-console.log(scalePos(legendSample[1]));
-console.log(scalePos(legendSample[2]));
-console.log(scalePos(legendSample[3]));
-console.log(scalePos(legendSample[4]));
-//Should now have 5 different numbers ready to represent colors for the legend.
-*/
 legendSample.push(minData);
 legendSample.push(minData/2);
 legendSample.push(0);
@@ -96,6 +72,29 @@ legendSample.push(maxData/2);
 legendSample.push(maxData);
 
 console.log(legendSample);
+
+
+/*Now lets make axis*/
+
+
+/* delete this
+console.log("dataset.length is ", dataset.length);
+var xScale = d3.scaleLinear().domain([0,dataset.length]).range([0,dataset.length]);
+svg.append("g").call(d3.axisBottom(xScale).tickFormat(function(d){ return d.x; }));
+*/
+/*screw the built in. Spawn ticks where appropriate (class=tick) and just dictate the transform="translate(x,y)" however you want, you defining x and y.*/
+/*Also make a line through it, remember.*/
+/*Finally, place a text right under, defining the x and y the same way they were calculated when getting the ticks in place so they are right below.*/
+
+
+svg.append("path").attr("d","M 10 250 L 500 250")
+.attr("stroke","green").attr("stroke-width","3").attr("fill","none");
+
+
+
+
+
+
 
 /*border (So it doesnt go over each colored rect instead, but around all.)*/
 var legendBorder = d3.select("#legend").append("svg").attr("width",20).attr("height",300).style("stroke","black").style("fill","none").style("stroke-width",10);
@@ -125,10 +124,6 @@ sss.selectAll("text").data(legendSample).enter().append("text").attr("font-size"
 
 
 
- var boxes = document.getElementsByClassName("heatBox");
- for (var i = 0; i < boxes.length; i++) {
-  boxes[i].id = "d" + i;
- }
 
 
 
@@ -159,18 +154,12 @@ sss.selectAll("text").data(legendSample).enter().append("text").attr("font-size"
 
 
 
-
-
-
-
-
-
-d3.select("body").append("h2").text("Zero = White, all values intensified.");
+d3.select("#secondMap").append("h2").text("Zero = White, all values intensified.")
 /*Second Map*/
 scalePos = d3.scaleLinear().domain([0,maxData]).range([0,50.0]);
 scaleNeg = d3.scaleLinear().domain([0,minData]).range([0,50.0]);
-var svg2 = d3.select("body").append("br");
-var svg = d3.select("body").append("svg").
+
+var svg = d3.select("#secondMap").append("svg").
 attr("width",1000).attr("height",300);
  svg.selectAll("rect").data(dataset).enter().append("rect")
 .attr("x",function(d,i) { return 10 * (i % 100); })

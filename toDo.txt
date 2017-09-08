@@ -2,3 +2,13 @@
 with a gold frame, so easier to spot.
 
 2 - Make legend text enlarge when hovering over.
+
+3 - Inherent mistake: In order for the x and y axis to be correct, you must have 83 total on the x,
+and 28 on the y! In addition, you must fill out whatever value gives a null to 0, so each of the 28
+strains has a value associated with each metabolite! make (dataset.length % 28 == 0) -> return true!
+
+Instead it is placed in a way where there are 100 columns and however many rows via # of elements!
+
+
+^^ LUCKILY, the work has been done for us in the new metabolite file, check email sent by chris, 
+parse by 83 each.
