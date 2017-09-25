@@ -3,7 +3,38 @@ var strains = [];
 var dataset = [];
 var metaText = []; /*all text, including mutants, formulas, etc*/
 
-$(document).ready(function() {  loadData(); });
+
+$(document).ready(function() {  
+  loadData(); 
+  $("#InfoBox").hide();
+  
+  /*
+  $("#testerHover").hover(function() { 
+  
+  document.getElementById("d0").setAttribute("fill", "rgba(255,0,0,1)");
+ }, {});
+ */
+
+});
+
+/*
+$(".heatBox").hover(function() { $( "#d439" ).css("fill","green"); }, function() { $( "#d10" ).css("fill","purple"); });
+*/
+
+function getInfoBox(num) {
+  //document.getElementById("testerHover").innerHTML = "the number is " + num;
+  $('#InfoBox').show();
+  var pos = $("#d" + num).position();
+  //document.getElementById("testerHover").innerHTML = "top: " + pos.top;
+  $('#InfoBox').css("left",pos.left + 15).css("top",pos.top + 15);
+  document.getElementById("InfoBox").innerHTML = 
+  "<p>" + dataset[num] + "</p>"
+  + "<p>" + strains[Math.trunc(num/83)] + "</p>"
+  + "<p>" + metabolites[num%83] + " </p>"
+  
+  ;
+}
+
 
 function loadData() {
  var xhttp = new XMLHttpRequest();
@@ -51,7 +82,7 @@ function loadHeadBoxes() {
 
 
 /*d3.select("body").append("div").attr("id","firstMap");*/
-d3.select("#firstMap").append("h2").text("Heatmap <noninteractive>"); 
+d3.select("#firstMap").append("h2").text("Interactive Heatmap"); 
  var svg = d3.select("#firstMap").append("svg")
 .attr("width",1350).attr("height",1000).attr("id","mapSvg"); /*Height is 300, acts as buffer room/padding.*/
 /*d3.select("body").append("p").text("ooo");*/
@@ -65,7 +96,7 @@ svg.selectAll("rect").data(dataset).enter().append("rect")
 .attr("y",function(d,i) { return 15 * Math.trunc(i/83); })
 .attr("height",15).attr("width",15)
 .attr("fill", function(d) { if (d < 0) { return "rgba(0,0,255," + scaleNeg(d) + ")"; } else { return "rgba(255,0,0," + scalePos(d) + ")"; } })
-.attr("class","heatBox").attr("id","dd"); //Change to function of unique ids later
+.attr("class","heatBox").attr("id",function(d,i) { return ("d" + i);}).attr("onmouseover",function(d,i) { return "getInfoBox(" + i + ")";}); //Change to function of unique ids later
 
 
 //var nextLine = document.createElement("br");

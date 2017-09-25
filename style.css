@@ -16,3 +16,11 @@
 #secondMap {
  clear: both;
 }
+
+#InfoBox {
+  position: absolute;
+  height: 125px;
+  width: 250px;
+  background-color: rgba(0,0,0,0.3);
+  border: dotted;
+}
